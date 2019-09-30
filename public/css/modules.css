@@ -12,6 +12,31 @@
 }
 
 
+/* ===== form elements ======  */
+
+fieldset {
+    margin-top: 16px;
+}
+
+legend {width:100%;}
+
+input {}
+
+input[type=text] {
+    line-height: 24px;
+    border: 2px solid #666;
+    padding: 16px;
+    display: block;
+    margin-top: 8px;
+    width:100%;
+}
+
+label {
+    line-height: 16px;
+    margin-top: 16px;
+    display: inline-block;
+}
+
 /* ===== footer ======  */
 
 footer {
