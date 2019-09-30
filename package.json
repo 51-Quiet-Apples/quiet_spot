@@ -1,0 +1,30 @@
+{
+  "name": "quiet_spot",
+  "version": "1.0.0",
+  "description": "find a quiet spot nearby",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "watch": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/51-Quiet-Apples/quiet_spot.git"
+  },
+  "author": "51 quiet apples team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/51-Quiet-Apples/quiet_spot/issues"
+  },
+  "homepage": "https://github.com/51-Quiet-Apples/quiet_spot#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "method-override": "^3.0.0",
+    "pg": "^7.12.1",
+    "superagent": "^5.1.0"
+  }
+}
