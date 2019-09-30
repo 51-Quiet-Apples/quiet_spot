@@ -92,6 +92,7 @@ function Cafe(resultObj){
 
 function allEventLocations(request, response){
   const url = `https://www.eventbriteapi.com/v3/events/search?location.longitude=${lng}&location.latitude=${lat}&start_date.keyword=today&expand=venue&token=${process.env.EVENTBRITE_API_KEY}`;
+  getLatLong(request, response);
   
   superagent
     .get(url)
