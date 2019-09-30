@@ -1,0 +1,78 @@
+body {
+    font-size: 18px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 3rem;
+    line-height:4.25rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    line-height:3rem;
+    margin-top:16px;
+}
+
+h3 {
+    font-size: 2.25rem;
+    line-height:3rem;
+    margin-top:16px;
+}
+
+h4 {
+    font-size: 1.4rem;
+    line-height:1.6rem;
+    margin-top:16px;
+}
+
+h5 {
+    font-size: 1rem;
+    line-height:1.4rem;
+    font-weight: 300;
+    margin-top:8px;
+    text-transform: uppercase;
+}
+
+h6 {
+    font-size: 1rem;
+    line-height:1.4rem;
+    font-weight: 500;
+    margin-top:8px;
+    /* text-transform: uppercase; */
+}
+
+
+p {
+    font-weight: 300;
+    font-size:1.2rem;
+    line-height:1.4rem;
+    margin-top:16px;
+}
+
+
+a {
+    text-decoration: none;
+    color: #666;
+}
+
+
+
+a:hover {
+    /* text-decoration: underline; */
+    color: #444;
+}
+
+input,
+button {
+    font-size: 1rem;
+}

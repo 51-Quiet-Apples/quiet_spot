@@ -1,0 +1,22 @@
+/* ===== see nav.css for nav-specific stuff ======  */
+
+.page-header {
+    background: #333;
+    height: 80px;
+}
+
+.page-header h2 {
+    margin: 0 0 0 120px;
+    line-height: 80px;
+    color: #dedede;
+}
+
+
+/* ===== footer ======  */
+
+footer {
+    min-height: 200px;
+    background: #333;
+    color: #dedede;
+    padding: 24px;
+}
