@@ -8,6 +8,7 @@ const superagent = require('superagent');
 
 require('dotenv').config();
 
+
 // ----- spin up the server -----
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,8 +38,11 @@ function errorHandler(error, request, respnse) {
 }
 
 // ----- Routes -----
-app.get('/', (request, response) => console.log('homepage route here'));
+
+
 app.get('/geo', getLatLong);
+app.get('/', (request, response) => response.render('pages/index'));
+
 
 // ----- default route -----
 app.get('*', (request, response) => console.log('hitting * route here!'));
