@@ -1,0 +1,26 @@
+<%- include('../layout/head.ejs')  %>
+
+<body class="front-page">
+
+    <%- include('../layout/header.ejs') %>
+
+    <main>
+        <a class="backlink" href="/">< back to search</a>
+        <h2>Top <%- data.length %> recommended Cafes in your a</h2>
+        <ul id="search-results-list">
+
+                <% 
+                console.log(data); 
+                data.forEach(cafe => { %>
+                <li class="cafe-result">
+                <img class="cafe-image" src="" />
+                <h4 class="name"><%= cafe.name %></h4>
+                <p class="address"><%= cafe.address %></p>
+                <a class="favorite button button-primary" href="/cafe/save/">+ Add to my favorites</a>
+                </li>
+    
+                <% }) %>
+            </ul>
+    </main>
+
+    <%- include('../layout/footer.ejs') %>
