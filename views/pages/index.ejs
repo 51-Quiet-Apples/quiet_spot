@@ -1,0 +1,32 @@
+<%- include('../layout/head.ejs')  %>
+
+<body class="front-page">
+
+    <%- include('../layout/header.ejs') %>
+
+    <main>
+        <h1>Find a Quiet Spot</h1>
+
+        <form id="location-search" action="/search" method="post">
+
+            <fieldset>
+                <legend>
+                    <input type="text" name="location" class="location-search-box" placeholder="Search near ...">
+                </legend>
+            </fieldset>
+
+            <fieldset>
+                <button type="submit" id="location-search-button">Go</button>
+            </fieldset>
+
+        </form>
+
+
+        <h2>Favorites</h2>
+        
+        <h2>Recent searches</h2>
+
+
+    </main>
+
+    <%- include('../layout/footer.ejs') %>

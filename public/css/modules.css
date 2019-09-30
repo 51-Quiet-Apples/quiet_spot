@@ -1,0 +1,47 @@
+/* ===== see nav.css for nav-specific stuff ======  */
+
+.page-header {
+    background: #333;
+    height: 80px;
+}
+
+.page-header h2 {
+    margin: 0 0 0 120px;
+    line-height: 80px;
+    color: #dedede;
+}
+
+
+/* ===== form elements ======  */
+
+fieldset {
+    margin-top: 16px;
+}
+
+legend {width:100%;}
+
+input {}
+
+input[type=text] {
+    line-height: 24px;
+    border: 2px solid #666;
+    padding: 16px;
+    display: block;
+    margin-top: 8px;
+    width:100%;
+}
+
+label {
+    line-height: 16px;
+    margin-top: 16px;
+    display: inline-block;
+}
+
+/* ===== footer ======  */
+
+footer {
+    min-height: 200px;
+    background: #333;
+    color: #dedede;
+    padding: 24px;
+}

@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+main {
+    padding: 24px;
+    min-height: 75vh;
+}
+
+@media(min-width:640px){
+}
+
+@media(min-width:1024px){
+
+}
+
+@media(min-width:1280px){
+
+}
