@@ -43,11 +43,12 @@ function errorHandler(error, request, response) {
 }
 
 // ----- Routes -----
-app.post('/search', getLatLong);
-// app.post('/search', getLatLong);
 
-// app.post('/results', {data: })
 app.get('/', (request, response) => response.render('pages/index'));
+
+app.post('/search', getLatLong);
+
+app.post('/favorites/:places_id', saveFavorite );
 
 
 // ----- default route -----
@@ -83,9 +84,17 @@ function saveSearch(searchQuery, lat, lng) {
 
   client.query(sql, values)
     .then(console.log('tried to write to db'));
-
 }
 
+function saveFavorite(request, response) {
+
+  console.log('trynta write');
+  console.log(request.params.places_id );
+
+  // const sql = 'INSERT INTO favorites (name, address, rating, photo, places_id) VALUES ($1, $2, $3, $4, $5);';
+  // const values = [name, address, rating, photo, places_id];
+
+}
 
 //function to list all Cafes from Google API
 //function will search places API and get results of all Cafes in the specified area
@@ -108,7 +117,7 @@ function Cafe(resultObj){
   this.rating = resultObj.rating;
   this.address = resultObj.vicinity;
   this.photo = resultObj.photos ? `https://maps.googleapis.com/maps/api/place/photo?photoreference=${resultObj.photos[0].photo_reference}&maxheight=500&key=${process.env.GOOGLE_API_KEY}` : 'https://via.placeholder.com/500';
-  this.id = resultObj.id;
+  this.places_id = resultObj.id;
 }
 
 //function to list all Eventbrite event locations in the same specified area of today
