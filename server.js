@@ -60,6 +60,7 @@ let lat = 0;
 let lng = 0;
 let cafes = [];
 let cafesEvent = [];
+let filteredCafes = [];
 
 //function to find the longitude and latitude of the city using Google Geocode API
 function getLatLong(request, response) {
@@ -88,8 +89,8 @@ function saveSearch(searchQuery, lat, lng) {
 
 function saveFavorite(request, response) {
 
-  console.log('trynta write');
-  console.log(request.params.places_id );
+  console.log('trynta write body:');
+  console.log(request.body );
 
   // const sql = 'INSERT INTO favorites (name, address, rating, photo, places_id) VALUES ($1, $2, $3, $4, $5);';
   // const values = [name, address, rating, photo, places_id];
@@ -107,7 +108,6 @@ function allCafes(lat, lng, request, response) {
     .then(result => {
       cafes = result.body.results.map(resultObj => new Cafe(resultObj))
       allEventLocations(request, response);
-      response.render('pages/searchresults', {data: cafes} )
     })
     .catch(error => errorHandler(error, response));
 }
@@ -129,7 +129,7 @@ function allEventLocations(request, response){
   superagent
     .get(url)
     .then(result => result.body.events.map(resultObj => new EventLatLong(resultObj)))
-    .then(result => cafesNearEvent(result))
+    .then(result => cafesNearEvent(result, response))
     .catch(error => errorHandler(error, response))
 }
 
@@ -141,7 +141,7 @@ function EventLatLong(resultObj){
 //function to list all Cafes near Eventbrite locations from Google API
 //store cafe locations in an array
 
-function cafesNearEvent(arr){
+function cafesNearEvent(arr, response){
   const promises = [];
   arr.forEach(location => {
     let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.lat},${location.lng}&radius=200&type=cafe&key=${process.env.GOOGLE_API_KEY}`;
@@ -154,7 +154,13 @@ function cafesNearEvent(arr){
   Promise
     .all(promises)
     .then(result => result.reduce((acc, cur) => acc.concat(cur), []))
-    .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
+    .then(result => {
+      filteredCafes = cafes.filter(cafe => !result.includes(cafe.address));
+      console.log(filteredCafes);
+      response.render('pages/searchresults', {data: filteredCafes} );
+
+    });
+  // .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
 }
 
 
