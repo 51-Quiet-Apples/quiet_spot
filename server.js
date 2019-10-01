@@ -98,7 +98,7 @@ function Cafe(resultObj){
 //store event locations in an array
 
 function allEventLocations(request, response){
-  const url = `https://www.eventbriteapi.com/v3/events/search?location.longitude=${lng}&location.latitude=${lat}&start_date.keyword=today&expand=venue&token=${process.env.EVENTBRITE_API_KEY}`;
+  const url = `https://www.eventbriteapi.com/v3/events/search?location.longitude=${lng}&location.latitude=${lat}&start_date.keyword=today&expand=venue&token=${process.env.EVENTBRITE_PUBLIC_TOKEN}`;
 
   superagent
     .get(url)
