@@ -89,11 +89,21 @@ function saveSearch(searchQuery, lat, lng) {
 
 function saveFavorite(request, response) {
 
-  console.log('trynta write body:');
-  console.log(request.body );
+  // console.log('trynta write body:');
+  // console.log(request.params.places_id );
 
-  // const sql = 'INSERT INTO favorites (name, address, rating, photo, places_id) VALUES ($1, $2, $3, $4, $5);';
-  // const values = [name, address, rating, photo, places_id];
+  filteredCafes.forEach(cafe => {
+
+    if (cafe.places_id === request.params.places_id) {
+      console.log('match!')
+      const sql = 'INSERT INTO favorites (name, address, rating, photo, places_id) VALUES ($1, $2, $3, $4, $5);';
+      const values = [cafe.name, cafe.address, cafe.rating, cafe.photo, cafe.places_id];
+
+      client.query(sql, values)
+        .then(console.log('derp write to db'))
+    } else {console.log('🔥🔥🔥🔥🔥🔥 no fukken matches 🔥🔥🔥🔥🔥🔥')}
+
+  })
 
 }
 
