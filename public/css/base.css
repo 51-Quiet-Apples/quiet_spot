@@ -4,15 +4,14 @@
 @import url('nav.css');
 @import url('modules.css');
 
-// form elements
-
 fieldset {
     margin-top: 16px;
 }
 
-legend {width:100%;}
+legend {
+    width: 100%;
+}
 
-input {}
 
 input[type=text] {
     line-height: 24px;
@@ -20,7 +19,7 @@ input[type=text] {
     padding: 16px;
     display: block;
     margin-top: 8px;
-    width:100%;
+    width: 100%;
 }
 
 label {
@@ -28,3 +27,4 @@ label {
     margin-top: 16px;
     display: inline-block;
 }
+
