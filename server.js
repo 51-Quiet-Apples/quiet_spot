@@ -52,17 +52,17 @@ app.listen(PORT, () => console.log(`listening on port ${PORT}` ));
 
 let lat = 0;
 let lng = 0;
+let cafes = [];
+let cafesEvent = [];
 
 //function to find the longitude and latitude of the city using Google Geocode API
 function getLatLong(request, response) {
-  // console.log( request.body.searchquery );
   const searchQuery = request.body.searchquery;
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchQuery}&key=${process.env.GOOGLE_API_KEY}`;
 
   superagent
     .get(url)
     .then(result => {
-      // console.log(result);
       lat = result.body.results[0].geometry.location.lat;
       lng = result.body.results[0].geometry.location.lng;
       allCafes(lat,lng, request, response);
@@ -81,7 +81,7 @@ function allCafes(lat, lng, request, response) {
   superagent
     .get(url)
     .then(result => {
-      const cafes = result.body.results.map(resultObj => new Cafe(resultObj))
+      cafes = result.body.results.map(resultObj => new Cafe(resultObj))
       allEventLocations(request, response);
       response.render('pages/searchresults', {data: cafes} )
     })
@@ -98,16 +98,15 @@ function Cafe(resultObj){
 //store event locations in an array
 
 function allEventLocations(request, response){
-  const url = `https://www.eventbriteapi.com/v3/events/search?location.longitude=${lng}&location.latitude=${lat}&start_date.keyword=today&expand=venue&token=${process.env.EVENTBRITE_PUBLIC_TOKEN}`;
+  const url = `https://www.eventbriteapi.com/v3/events/search?location.longitude=${lng}&location.latitude=${lat}&location.within=2km&start_date.keyword=today&expand=venue&token=${process.env.EVENTBRITE_PUBLIC_TOKEN}`;
 
   superagent
     .get(url)
-    .then(result => {
-      const eventLocations = result.body.events.map(resultObj => new EventLatLong(resultObj))
-      cafesNearEvent(eventLocations);
-    })
+    .then(result => result.body.events.map(resultObj => new EventLatLong(resultObj)))
+    .then(result => cafesNearEvent(result))
     .catch(error => errorHandler(error, response))
 }
+
 function EventLatLong(resultObj){
   this.lat = resultObj.venue.latitude;
   this.lng = resultObj.venue.longitude;
@@ -116,18 +115,22 @@ function EventLatLong(resultObj){
 //function to list all Cafes near Eventbrite locations from Google API
 //store cafe locations in an array
 
-const eventCafes =[];
+function cafesNearEvent(arr){
+  const promises = [];
+  arr.forEach(location => {
+    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.lat},${location.lng}&radius=200&type=cafe&key=${process.env.GOOGLE_API_KEY}`;
 
-function cafesNearEvent(eventLocations, response){
-  eventLocations.forEach(location => {
-    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.lat},${location.lng}&radius=100&type=cafe&key=${process.env.GOOGLE_API_KEY}`;
-
-    superagent
+    promises.push(superagent
       .get(url)
-      .then(result => result.body.results.forEach(result => console.log(result.vicinity)))
-      .catch(error => errorHandler(error, response));
+      .then(result => result.body.results.map(result => result.vicinity))
+      .catch(error => console.log('heyyyy', error)))
   })
+  Promise
+    .all(promises)
+    .then(result => result.reduce((acc, cur) => acc.concat(cur), []))
+    .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
 }
+
 
 //function to filter out Cafe locations that are not in third array
 //render to the front end
