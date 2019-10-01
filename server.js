@@ -92,6 +92,8 @@ function Cafe(resultObj){
   this.name = resultObj.name;
   this.rating = resultObj.rating;
   this.address = resultObj.vicinity;
+  this.photo = resultObj.photos ? `https://maps.googleapis.com/maps/api/place/photo?photoreference=${resultObj.photos[0].photo_reference}&maxheight=500&key=${process.env.GOOGLE_API_KEY}` : 'https://via.placeholder.com/500';
+  this.id = resultObj.id;
 }
 
 //function to list all Eventbrite event locations in the same specified area of today
