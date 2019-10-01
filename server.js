@@ -38,9 +38,8 @@ function errorHandler(error, request, response) {
 }
 
 // ----- Routes -----
-
-
 app.post('/search', getLatLong);
+// app.post('/search', getLatLong);
 
 // app.post('/results', {data: })
 app.get('/', (request, response) => response.render('pages/index'));
@@ -66,7 +65,7 @@ function getLatLong(request, response) {
       // console.log(result);
       lat = result.body.results[0].geometry.location.lat;
       lng = result.body.results[0].geometry.location.lng;
-      allCafes(lat,lng);
+      allCafes(lat,lng, request, response);
     })
     .catch(error => errorHandler(error, request, response));
 }
@@ -84,6 +83,7 @@ function allCafes(lat, lng, request, response) {
     .then(result => {
       const cafes = result.body.results.map(resultObj => new Cafe(resultObj))
       allEventLocations(request, response);
+      response.render('pages/searchresults', {data: cafes} )
     })
     .catch(error => errorHandler(error, response));
 }
