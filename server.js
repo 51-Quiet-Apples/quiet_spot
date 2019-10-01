@@ -3,15 +3,20 @@
 // ----- dependencies -----
 const express = require('express');
 const methodOverride = require('method-override');
-const pg = require('pg');
 const superagent = require('superagent');
-
+const pg = require('pg');
 require('dotenv').config();
 
 
 // ----- spin up the server -----
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+
+// ----- database client -----
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.error(err));
 
 
 // ----- middleware -----
@@ -65,11 +70,21 @@ function getLatLong(request, response) {
     .then(result => {
       lat = result.body.results[0].geometry.location.lat;
       lng = result.body.results[0].geometry.location.lng;
+      saveSearch(searchQuery, lat, lng);
       allCafes(lat,lng, request, response);
     })
     .catch(error => errorHandler(error, request, response));
 }
 
+function saveSearch(searchQuery, lat, lng) {
+
+  const sql = `INSERT INTO searches (query, lat, long) VALUES ($1, $2, $3);`;
+  const values = [searchQuery, lat, lng];
+
+  client.query(sql, values)
+    .then(console.log('tried to write to db'));
+
+}
 
 
 //function to list all Cafes from Google API
