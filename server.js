@@ -124,7 +124,7 @@ function getFavorites(request, response){
 
 function getSearches(request, response){
   console.log('🔥🔥🔥🔥🔥🔥 trynta get searches 🔥🔥🔥🔥🔥🔥')
-  const sql = 'SELECT * FROM searches;';
+  const sql = 'SELECT * FROM searches LIMIT 10;';
   client.query(sql)
 
     .then(result => {
