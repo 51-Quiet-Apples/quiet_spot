@@ -2,6 +2,8 @@
 console.log('trynta render recent-searches.ejs') 
 data.forEach(recent => { %>
 <li>
-    <h4><%= recent.query %></h4>    
+    <a class="recent-search" data-query="<%= recent.query %>">
+        <%= recent.query %>
+    </a>
 </li>
 <% }) %>
