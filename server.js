@@ -52,6 +52,8 @@ app.post('/favorites/:places_id', saveFavorite );
 
 app.get('/favorites/', getFavorites );
 
+app.get('/searches/', getSearches );
+
 
 // ----- default route -----
 app.get('*', (request, response) => console.log('hitting * route here!'));
@@ -111,16 +113,17 @@ function saveFavorite(request, response) {
 
 
 function getFavorites(request, response){
-
   const sql = 'SELECT * FROM favorites;';
-  client.query(sql)
+  client
+    .query(sql)
+    .then(result => response.render('pages/favorites', {data:result.rows}))
+}
 
-    .then(result => {
-
-      response.render('pages/favorites', {data:result.rows})
-    })
-
-
+function getSearches(request, response){
+  const sql = 'SELECT * FROM searches;';
+  client
+    .query(sql)
+    .then(result => response.render('pages/searches', {data: result.rows}))
 }
 
 //function to list all Cafes from Google API
@@ -144,6 +147,7 @@ function Cafe(resultObj){
   this.address = resultObj.vicinity;
   this.photo = resultObj.photos ? `https://maps.googleapis.com/maps/api/place/photo?photoreference=${resultObj.photos[0].photo_reference}&maxheight=500&key=${process.env.GOOGLE_API_KEY}` : 'https://via.placeholder.com/500';
   this.places_id = resultObj.id;
+  this.count = 0;
 }
 
 //function to list all Eventbrite event locations in the same specified area of today
@@ -174,20 +178,57 @@ function cafesNearEvent(arr, response){
 
     promises.push(superagent
       .get(url)
-      .then(result => result.body.results.map(result => result.vicinity))
+      .then(result => result.body.results.map(resultObj => new Cafe(resultObj)))
       .catch(error => console.log('heyyyy', error)))
   })
   Promise
     .all(promises)
     .then(result => result.reduce((acc, cur) => acc.concat(cur), []))
     .then(result => {
-      filteredCafes = cafes.filter(cafe => !result.includes(cafe.address));
+      // console.log('cafes:', cafes);
+      // console.log('updateCount', updateCount(removeOverLaps(result), checkOverLaps(result)));
+
+      filteredCafes = cafes.concat(updateCount(removeOverLaps(result), checkOverLaps(result)));
+      removeOverLaps(filteredCafes);
       console.log(filteredCafes);
       response.render('pages/searchresults', {data: filteredCafes} );
-
-    });
-  // .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
+    })
+    // .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
 }
+
+function checkOverLaps(arr){
+  const result = {};
+  for (let i = 0; i < arr.length; i++){
+    result[arr[i].address] = (result[arr[i].address] || 0) + 1
+  }
+
+  const pairCounted = Object.keys(result).map(key => ({
+    address: key,
+    count: result[key]
+  }))
+  return pairCounted;
+}
+
+function removeOverLaps(arr){
+  return arr.reduce((unique, o) => {
+    if(!unique.some(obj => obj.address === o.address)) {
+      unique.push(o);
+    }
+    return unique;
+  },[]);
+}
+
+function updateCount(arr1, arr2){
+  return arr1.map(cafe => {
+    for(let i = 0; i < arr2.length; i++) {
+      if(cafe.address === arr2[i].address) {
+        cafe.count = arr2[i].count;
+      }
+    }
+    return cafe;
+  })
+}
+
 
 
 //function to filter out Cafe locations that are not in third array
