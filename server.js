@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 
 // ----- dependencies -----
@@ -43,7 +44,6 @@ function errorHandler(error, request, response) {
 }
 
 // ----- Routes -----
-
 app.get('/', (request, response) => response.render('pages/index'));
 
 app.post('/search', getLatLong);
@@ -64,6 +64,7 @@ let cafes = [];
 let cafesEvent = [];
 let filteredCafes = [];
 
+
 //function to find the longitude and latitude of the city using Google Geocode API
 function getLatLong(request, response) {
   const searchQuery = request.body.searchquery;
@@ -80,6 +81,7 @@ function getLatLong(request, response) {
     .catch(error => errorHandler(error, request, response));
 }
 
+
 function saveSearch(searchQuery, lat, lng) {
 
   const sql = `INSERT INTO searches (query, lat, long) VALUES ($1, $2, $3);`;
@@ -89,10 +91,8 @@ function saveSearch(searchQuery, lat, lng) {
     .then(console.log('tried to write to db'));
 }
 
-function saveFavorite(request, response) {
 
-  // console.log('trynta write body:');
-  // console.log(request.params.places_id );
+function saveFavorite(request, response) {
 
   filteredCafes.forEach(cafe => {
 
@@ -106,22 +106,20 @@ function saveFavorite(request, response) {
     } else {console.log('🔥🔥🔥🔥🔥🔥 no fukken matches 🔥🔥🔥🔥🔥🔥')}
 
   })
-
 }
 
 
 function getFavorites(request, response){
-
+  // console.log('🔥🔥🔥🔥🔥🔥 trynta get favorites 🔥🔥🔥🔥🔥🔥')
   const sql = 'SELECT * FROM favorites;';
   client.query(sql)
 
     .then(result => {
-
-      response.render('pages/favorites', {data:result.rows})
+      response.render('partials/favorites', {data:result.rows})
     })
 
-
 }
+
 
 //function to list all Cafes from Google API
 //function will search places API and get results of all Cafes in the specified area
@@ -138,6 +136,7 @@ function allCafes(lat, lng, request, response) {
     .catch(error => errorHandler(error, response));
 }
 
+
 function Cafe(resultObj){
   this.name = resultObj.name;
   this.rating = resultObj.rating;
@@ -146,9 +145,9 @@ function Cafe(resultObj){
   this.places_id = resultObj.id;
 }
 
+
 //function to list all Eventbrite event locations in the same specified area of today
 //store event locations in an array
-
 function allEventLocations(request, response){
   const url = `https://www.eventbriteapi.com/v3/events/search?location.longitude=${lng}&location.latitude=${lat}&location.within=2km&start_date.keyword=today&expand=venue&token=${process.env.EVENTBRITE_PUBLIC_TOKEN}`;
 
@@ -159,6 +158,7 @@ function allEventLocations(request, response){
     .catch(error => errorHandler(error, response))
 }
 
+
 function EventLatLong(resultObj){
   this.lat = resultObj.venue.latitude;
   this.lng = resultObj.venue.longitude;
@@ -166,7 +166,6 @@ function EventLatLong(resultObj){
 
 //function to list all Cafes near Eventbrite locations from Google API
 //store cafe locations in an array
-
 function cafesNearEvent(arr, response){
   const promises = [];
   arr.forEach(location => {
@@ -188,7 +187,3 @@ function cafesNearEvent(arr, response){
     });
   // .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
 }
-
-
-//function to filter out Cafe locations that are not in third array
-//render to the front end
