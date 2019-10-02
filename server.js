@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 
 // ----- dependencies -----
@@ -109,7 +110,7 @@ function saveFavorite(request, response) {
 
 
 function getFavorites(request, response){
-
+  console.log('🔥🔥🔥🔥🔥🔥 trynta get favorites 🔥🔥🔥🔥🔥🔥')
   const sql = 'SELECT * FROM favorites;';
   client.query(sql)
 
