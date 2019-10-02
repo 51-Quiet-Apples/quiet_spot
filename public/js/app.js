@@ -29,9 +29,8 @@ $(document).ready(function () {
 
       $('.recent-search').on('click', function(event) {
         event.preventDefault();
-        console.log(
-          event.target.text
-        );
+        $('#location-search input').val(event.target.text);
+        $('#location-search').submit();
       })
     })
     .catch(error => {
