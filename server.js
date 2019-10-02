@@ -148,6 +148,7 @@ function Cafe(resultObj){
   this.photo = resultObj.photos ? `https://maps.googleapis.com/maps/api/place/photo?photoreference=${resultObj.photos[0].photo_reference}&maxheight=500&key=${process.env.GOOGLE_API_KEY}` : 'https://via.placeholder.com/500';
   this.places_id = resultObj.id;
   this.count = 0;
+  this.quietScore = 0;
 }
 
 //function to list all Eventbrite event locations in the same specified area of today
@@ -185,13 +186,11 @@ function cafesNearEvent(arr, response){
     .all(promises)
     .then(result => result.reduce((acc, cur) => acc.concat(cur), []))
     .then(result => {
-      // console.log('cafes:', cafes);
-      // console.log('updateCount', updateCount(removeOverLaps(result), checkOverLaps(result)));
-
-      filteredCafes = cafes.concat(updateCount(removeOverLaps(result), checkOverLaps(result)));
-      removeOverLaps(filteredCafes);
-      console.log(filteredCafes);
-      response.render('pages/searchresults', {data: filteredCafes} );
+      const listWithOverlaps  = cafes.concat(updateCount(removeOverLaps(result), checkOverLaps(result)));
+      const listNoOverlaps = removeOverLaps(listWithOverlaps);
+      const listWithQuietScore = updateQuietScore(listNoOverlaps);
+      console.log(listWithQuietScore);
+      response.render('pages/searchresults', {data: listWithQuietScore} );
     })
     // .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
 }
@@ -225,6 +224,14 @@ function updateCount(arr1, arr2){
         cafe.count = arr2[i].count;
       }
     }
+    return cafe;
+  })
+}
+
+function updateQuietScore(arr){
+  const max = arr.reduce((max, cur) => Math.max(max, cur.count), arr[0].count);
+  return arr.map(cafe => {
+    cafe.quietScore = 5 - 5 * cafe.count / max;
     return cafe;
   })
 }
