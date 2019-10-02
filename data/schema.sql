@@ -1,8 +1,3 @@
-DROP DATABASE quiet_spot;
-CREATE DATABASE quiet_spot;
-
-\c quiet_spot;
-
 DROP TABLE IF EXISTS favorites;
 CREATE TABLE favorites (
     id SERIAL PRIMARY KEY,
