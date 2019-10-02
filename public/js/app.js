@@ -19,6 +19,19 @@ $(document).ready(function () {
       console.log('error: ' + error);
     });
 
+  $.ajax({
+    url: '/search/',
+    type: 'get',
+    dataType: 'html'
+  })
+    .then(recentsList => {
+      console.log(recentsList);
+      $('#recents').append(recentsList);
+    })
+    .catch(error => {
+      console.log('error: ' + error);
+    });
+
   return false;
 
 
