@@ -110,7 +110,7 @@ function saveFavorite(request, response) {
 
 
 function getFavorites(request, response){
-  console.log('🔥🔥🔥🔥🔥🔥 trynta get favorites 🔥🔥🔥🔥🔥🔥')
+  // console.log('🔥🔥🔥🔥🔥🔥 trynta get favorites 🔥🔥🔥🔥🔥🔥')
   const sql = 'SELECT * FROM favorites;';
   client.query(sql)
 
