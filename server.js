@@ -188,7 +188,7 @@ function cafesNearEvent(arr, response){
     .then(result => {
       const listWithOverlaps  = cafes.concat(updateCount(removeOverLaps(result), checkOverLaps(result)));
       const listNoOverlaps = removeOverLaps(listWithOverlaps);
-      const listWithQuietScore = updateQuietScore(listNoOverlaps);
+      const listWithQuietScore = updateQuietScore(listNoOverlaps).sort((a, b) => (a.quietScore < b.quietScore) ? 1 : -1);
       console.log(listWithQuietScore);
       response.render('pages/searchresults', {data: listWithQuietScore} );
     })
