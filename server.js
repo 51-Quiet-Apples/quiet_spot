@@ -50,6 +50,8 @@ app.post('/search', getLatLong);
 
 app.post('/favorites/:places_id', saveFavorite );
 
+app.get('/favorites/', getFavorites );
+
 
 // ----- default route -----
 app.get('*', (request, response) => console.log('hitting * route here!'));
@@ -104,6 +106,20 @@ function saveFavorite(request, response) {
     } else {console.log('🔥🔥🔥🔥🔥🔥 no fukken matches 🔥🔥🔥🔥🔥🔥')}
 
   })
+
+}
+
+
+function getFavorites(request, response){
+
+  const sql = 'SELECT * FROM favorites;';
+  client.query(sql)
+
+    .then(result => {
+
+      response.render('pages/favorites', {data:result.rows})
+    })
+
 
 }
 
