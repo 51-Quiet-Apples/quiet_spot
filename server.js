@@ -54,6 +54,8 @@ app.post('/favorites/:places_id', saveFavorite );
 
 app.get('/favorites/', getFavorites );
 
+app.get('/searches/', getSearches );
+
 
 // ----- default route -----
 app.get('*', (request, response) => console.log('hitting * route here!'));
@@ -112,21 +114,16 @@ function saveFavorite(request, response) {
 
 
 function getFavorites(request, response){
-  // console.log('🔥🔥🔥🔥🔥🔥 trynta get favorites 🔥🔥🔥🔥🔥🔥')
   const sql = 'SELECT * FROM favorites;';
-  client.query(sql)
-
-    .then(result => {
-      response.render('partials/favorites', {data:result.rows})
-    })
+  client
+    .query(sql)
+    .then(result => response.render('pages/favorites', {data:result.rows}))
 }
 
 
 function getSearches(request, response){
-  console.log('🔥🔥🔥🔥🔥🔥 trynta get searches 🔥🔥🔥🔥🔥🔥')
   const sql = 'SELECT * FROM searches LIMIT 10;';
   client.query(sql)
-
     .then(result => {
       response.render('partials/recent-searches', {data:result.rows})
     })
@@ -155,6 +152,8 @@ function Cafe(resultObj){
   this.address = resultObj.vicinity;
   this.photo = resultObj.photos ? `https://maps.googleapis.com/maps/api/place/photo?photoreference=${resultObj.photos[0].photo_reference}&maxheight=500&key=${process.env.GOOGLE_API_KEY}` : 'https://via.placeholder.com/500';
   this.places_id = resultObj.id;
+  this.count = 0;
+  this.quietScore = 0;
 }
 
 
@@ -185,17 +184,61 @@ function cafesNearEvent(arr, response){
 
     promises.push(superagent
       .get(url)
-      .then(result => result.body.results.map(result => result.vicinity))
+      .then(result => result.body.results.map(resultObj => new Cafe(resultObj)))
       .catch(error => console.log('heyyyy', error)))
   })
   Promise
     .all(promises)
     .then(result => result.reduce((acc, cur) => acc.concat(cur), []))
     .then(result => {
-      filteredCafes = cafes.filter(cafe => !result.includes(cafe.address));
-      console.log(filteredCafes);
-      response.render('pages/searchresults', {data: filteredCafes} );
-
-    });
-  // .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
+      const listWithOverlaps  = cafes.concat(updateCount(removeOverLaps(result), checkOverLaps(result)));
+      const listNoOverlaps = removeOverLaps(listWithOverlaps);
+      const listWithQuietScore = updateQuietScore(listNoOverlaps).sort((a, b) => (a.quietScore < b.quietScore) ? 1 : -1);
+      console.log(listWithQuietScore);
+      response.render('pages/searchresults', {data: listWithQuietScore} );
+    })
+    // .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
 }
+
+function checkOverLaps(arr){
+  const result = {};
+  for (let i = 0; i < arr.length; i++){
+    result[arr[i].address] = (result[arr[i].address] || 0) + 1
+  }
+
+  const pairCounted = Object.keys(result).map(key => ({
+    address: key,
+    count: result[key]
+  }))
+  return pairCounted;
+}
+
+
+function removeOverLaps(arr){
+  return arr.reduce((unique, o) => {
+    if(!unique.some(obj => obj.address === o.address)) {
+      unique.push(o);
+    }
+    return unique;
+  },[]);
+}
+
+function updateCount(arr1, arr2){
+  return arr1.map(cafe => {
+    for(let i = 0; i < arr2.length; i++) {
+      if(cafe.address === arr2[i].address) {
+        cafe.count = arr2[i].count;
+      }
+    }
+    return cafe;
+  })
+}
+
+function updateQuietScore(arr){
+  const max = arr.reduce((max, cur) => Math.max(max, cur.count), arr[0].count);
+  return arr.map(cafe => {
+    cafe.quietScore = 5 - 5 * cafe.count / max;
+    return cafe;
+  })
+}
+
