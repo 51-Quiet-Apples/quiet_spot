@@ -122,7 +122,7 @@ function getFavorites(request, response){
 
 
 function getSearches(request, response){
-  const sql = 'SELECT * FROM searches LIMIT 10;';
+  const sql = 'SELECT * FROM searches ORDER BY id DESC LIMIT 10;';
   client.query(sql)
     .then(result => {
       response.render('partials/recent-searches', {data:result.rows})
