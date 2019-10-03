@@ -43,6 +43,7 @@ function errorHandler(error, request, response) {
   response.status(500).render('pages/error');
 }
 
+
 // ----- Routes -----
 app.get('/', (request, response) => response.render('pages/index'));
 
@@ -55,6 +56,8 @@ app.post('/favorites/:places_id', saveFavorite );
 app.get('/favorites/', getFavorites );
 
 app.get('/searches/', getSearches );
+
+app.get('/favorites/delete/:places_id', deleteFavorite );
 
 
 // ----- default route -----
@@ -118,6 +121,14 @@ function getFavorites(request, response){
   client
     .query(sql)
     .then(result => response.render('partials/favorites', {data:result.rows}))
+}
+
+function deleteFavorite(request, response){
+  const sql = 'DELETE FROM favorites WHERE places_id=$1;';
+  let values = [request.params.places_id];
+  client.query(sql, values)
+    .then( response.redirect('/') )
+    .catch(error => errorHandler(error, response))
 }
 
 
