@@ -13,14 +13,14 @@ legend {
 
 
 input[type=text] {
-    border:3px solid #D3D9CB;
+    border: 3px solid #D3D9CB;
     padding: 24px 16px;
     display: block;
     margin-top: 8px;
     width: 100%;
-    border-radius:1px;
+    border-radius: 1px;
     line-height: 1.2rem;
-    font-size:1.4rem;
+    font-size: 1.4rem;
 
 }
 
@@ -43,15 +43,71 @@ footer {
 
 /* ===== card-list ======  */
 
+.card-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 16px;
+}
+
+@media(min-width:640px) {
+
+    .card-list {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+@media(min-width:1024px) {
+
+    .card-list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+}
+
+@media(min-width:1280px) {
+
+    .card-list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+}
+
 .card-list .card {
-    margin: 24px 0 0;
-    padding: 16px;
+    margin: 16px 0 0;
     background: #fefefe;
+    text-align: center;
+}
+
+.card-list-recents .card {
+    padding: 16px;
+    text-align:center;
+
 }
 
 .card-list .card h4 {
     margin-top: 0;
-    line-height: 1rem;
+
+}
+
+.image-container {
+    height: 240px;
+    width:240px;
+    display:block;
+    overflow: hidden;
+    margin: 24px auto 16px;
+}
+
+.cafe-image {
+    height:240px;
+    object-fit:cover;
+}
+
+.card .button , 
+.card button {
+    display:block;
+    margin: 24px;
+
 }
 
 
@@ -64,12 +120,12 @@ footer {
     display: block;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing:1px;;
+    letter-spacing: 1px;
     min-width: 120px;
     text-align: center;
     margin: 16px 0 0;
-    border-radius:1px;
-    box-shadow:none;
+    border-radius: 1px;
+    box-shadow: none;
 }
 
 .button-primary {
@@ -80,6 +136,7 @@ footer {
 .button-primary:hover {
     background: #D3D9CB;
     color: #555;
+    cursor:pointer;
 }
 
 .button-secondary {
@@ -90,6 +147,7 @@ footer {
 .button-secondary:hover {
     color: #555;
     border: 2px solid #D3D9CB;
+    cursor:pointer;
 
 }
 
@@ -114,7 +172,18 @@ footer {
 #logo {
     width: 35vw;
     margin: -16px auto 0;
+    min-width: 300px;
 }
+
+@media (min-width:1024px) {
+
+    #logo {
+        width: 25vw;
+        margin: -24px auto 0;
+    }
+
+}
+
 
 #logo-type {
     display: block;
@@ -137,4 +206,8 @@ footer {
 #search-form .button {
     margin: 16px auto 0;
     width: 100%;
+}
+
+#search-form h4 {
+    margin-top: 0;
 }
