@@ -57,8 +57,9 @@ app.get('/favorites/', getFavorites );
 
 app.get('/searches/', getSearches );
 
-app.get('/favorites/delete/:places_id', deleteFavorite );
+app.get('/details/:places_id', detailCafe);
 
+app.get('/favorites/delete/:places_id', deleteFavorite );
 
 // ----- default route -----
 app.get('*', (request, response) => console.log('hitting * route here!'));
@@ -70,6 +71,7 @@ let lng = 0;
 let cafes = [];
 let cafesEvent = [];
 let filteredCafes = [];
+let listWithQuietScore = [];
 
 
 //function to find the longitude and latitude of the city using Google Geocode API
@@ -204,8 +206,7 @@ function cafesNearEvent(arr, response){
     .then(result => {
       const listWithOverlaps  = cafes.concat(updateCount(removeOverLaps(result), checkOverLaps(result)));
       const listNoOverlaps = removeOverLaps(listWithOverlaps);
-      const listWithQuietScore = updateQuietScore(listNoOverlaps).sort((a, b) => (a.quietScore < b.quietScore) ? 1 : -1);
-      console.log(listWithQuietScore);
+      listWithQuietScore = updateQuietScore(listNoOverlaps).sort((a, b) => (a.quietScore < b.quietScore) ? 1 : -1);
       response.render('pages/searchresults', {data: listWithQuietScore} );
     })
     // .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
@@ -250,6 +251,16 @@ function updateQuietScore(arr){
   return arr.map(cafe => {
     cafe.quietScore = 5 - 5 * cafe.count / max;
     return cafe;
+  })
+}
+
+//details page
+function detailCafe (request, response) {
+  listWithQuietScore.forEach(cafe => {
+    if(cafe.places_id === request.params.places_id) {
+      console.log('ME FIREEE');
+      return response.render('pages/detail', {data:cafe})
+    }
   })
 }
 
