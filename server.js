@@ -44,13 +44,13 @@ app.get('/search/', getSearches );
 
 app.post('/search', getLatLong);
 
-app.post('/favorites/:places_id', saveFavorite );
-
 app.get('/favorites/', getFavorites );
 
 app.get('/searches/', getSearches );
 
 app.get('/details/:places_id', detailCafe);
+
+app.post('/favorites/:places_id', saveFavorite );
 
 app.get('/favorites/delete/:places_id', deleteFavorite );
 
@@ -93,8 +93,10 @@ function saveSearch(searchQuery, lat, lng) {
 
 
 function saveFavorite(request, response) {
+  console.log('hitting save favorite wif"');
+  console.log(request.params.places_id);
 
-  filteredCafes.forEach(cafe => {
+  listWithQuietScore.forEach(cafe => {
     if (cafe.places_id === request.params.places_id) {
       const sql = 'INSERT INTO favorites (name, address, rating, photo, places_id) VALUES ($1, $2, $3, $4, $5);';
       const values = [cafe.name, cafe.address, cafe.rating, cafe.photo, cafe.places_id];
