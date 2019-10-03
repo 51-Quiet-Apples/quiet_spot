@@ -14,7 +14,7 @@
                 data.forEach(cafe => { %>
                     <li class="cafe-result card">
                         <form class="cafe-form" action="/favorites/<%= cafe.places_id %>" method="POST"> 
-                        <img class="cafe-image" src="" />
+                        <img class="cafe-image" src="<%= cafe.photo %>" />
                         <h4 class="name"><%= cafe.name %></h4>
                         <p class="">Rating:
                             <%= cafe.rating %>
