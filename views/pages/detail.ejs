@@ -1,8 +1,27 @@
+<%- include('../layout/head.ejs')  %>
 
-    <article class="detail">
-        
-        <% console.log(data) %>
-        <h2>Details for cafe</h2>
-        <p>Goes here</p>
+<body>
+    <main>
+    <section>
+        <!-- <div data-id="<%= data.id %>"> -->
+          <img src="<%= data.photo %>" />
+          <h2><%= data.name %></h2>
+          <h3><%= data.address %></h3>
+          <h3>Quiet Score: <%= data.quietScore %></h3>
+        </div>
+      </section>
 
-    </article>
+      <button type="submit" class="favorite button button-secondary" href="">+ Add to my favorites</button>
+      <button type="submit" class="favorite button button-secondary" href="">Delete</button>
+    </main>
+  <footer>
+    <%- include('../layout/footer.ejs') %>
+  </footer>
+</body>
+
+
+
+
+
+
+
