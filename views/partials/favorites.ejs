@@ -2,7 +2,12 @@
 // console.log('trynta render favorites.ejs') 
 data.forEach(favorite => { %>
 <li class="card">
+    <img src="<%= favorite.photo %>" />
     <h4><%= favorite.name %></h4>
-    <p><%= favorite.address %></p>    
-</li>
+    <p class="rating">Rating:
+        <%= favorite.rating %>
+        <i class="far fa-star"></i>
+    </p>
+    <p><%= favorite.address %></p>
+    </li>
 <% }) %>
