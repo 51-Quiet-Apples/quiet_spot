@@ -5,15 +5,22 @@
     <main>
     <section>
         <!-- <div data-id="<%= data.id %>"> -->
-          <img src="<%= data.photo %>" />
-          <h2><%= data.name %></h2>
-          <h3><%= data.address %></h3>
-          <h3>Quiet Score: <%= data.quietScore %></h3>
+        <form class="cafe-form" action="/favorites/<%= data.places_id %>" method="POST"> 
+                <img src="<%= data.photo %>" />
+                <h4 class="name"><%= data.name %></h4>
+                <p class="">Rating:
+                    <%= data.rating %>
+                    <i class="far fa-star"></i>
+                </p>
+                <p class="address"><%= data.address %></p>
+                <p class="quiet-score">Quiet Score: <%= data.quietScore %></p>
+                
+                <button type="submit" class="favorite button button-secondary">+ Add to my favorites</button>
+            </form>
+
         </div>
       </section>
 
-      <button type="submit" class="favorite button button-secondary" href="/favorites/<%= data.places_id %>">+ Add to my favorites</button>
-      <button type="submit" class="favorite button button-secondary" href="/favorites/delete/<%= data.places_id %>">Delete</button>
     </main>
   <footer>
     <%- include('../layout/footer.ejs') %>
