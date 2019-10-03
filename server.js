@@ -117,7 +117,7 @@ function getFavorites(request, response){
   const sql = 'SELECT * FROM favorites;';
   client
     .query(sql)
-    .then(result => response.render('pages/favorites', {data:result.rows}))
+    .then(result => response.render('partials/favorites', {data:result.rows}))
 }
 
 
