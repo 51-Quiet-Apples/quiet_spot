@@ -3,7 +3,6 @@
 
 // ----- dependencies -----
 const express = require('express');
-const methodOverride = require('method-override');
 const superagent = require('superagent');
 const pg = require('pg');
 require('dotenv').config();
@@ -23,14 +22,6 @@ client.on('error', err => console.error(err));
 // ----- middleware -----
 app.use(express.static('./public'));
 app.use(express.urlencoded({extended:true}));
-// doublecheck this bit before using to verify working.
-// app.use(methodOverride((request, response) => {
-//   if(request.body && typeof request.body === 'object' && '_method' in request.body) {
-//     let method = request.body._method;
-//     delete request.body._method;
-//     return method;
-//   }
-// }));
 
 
 // ----- templates -----
@@ -46,6 +37,8 @@ function errorHandler(error, request, response) {
 
 // ----- Routes -----
 app.get('/', (request, response) => response.render('pages/index'));
+
+app.get('/about', (request, response) => response.render('pages/about'));
 
 app.get('/search/', getSearches );
 
@@ -69,7 +62,6 @@ app.listen(PORT, () => console.log(`listening on port ${PORT}` ));
 let lat = 0;
 let lng = 0;
 let cafes = [];
-let cafesEvent = [];
 let filteredCafes = [];
 let listWithQuietScore = [];
 
@@ -97,23 +89,19 @@ function saveSearch(searchQuery, lat, lng) {
   const values = [searchQuery, lat, lng];
 
   client.query(sql, values)
-    .then(console.log('tried to write to db'));
 }
 
 
 function saveFavorite(request, response) {
 
   filteredCafes.forEach(cafe => {
-
     if (cafe.places_id === request.params.places_id) {
-      console.log('match!')
       const sql = 'INSERT INTO favorites (name, address, rating, photo, places_id) VALUES ($1, $2, $3, $4, $5);';
       const values = [cafe.name, cafe.address, cafe.rating, cafe.photo, cafe.places_id];
 
       client.query(sql, values)
-        .then(console.log('derp write to db'))
-    } else {console.log('🔥🔥🔥🔥🔥🔥 no fukken matches 🔥🔥🔥🔥🔥🔥')}
-
+    }
+    else {console.log('🔥🔥🔥🔥🔥🔥 Save to DB Failed 🔥🔥🔥🔥🔥🔥')}
   })
 }
 
