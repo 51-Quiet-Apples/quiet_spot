@@ -194,7 +194,7 @@ function cafesNearEvent(arr, response){
     .then(result => {
       const listWithOverlaps  = cafes.concat(updateCount(removeOverLaps(result), checkOverLaps(result)));
       const listNoOverlaps = removeOverLaps(listWithOverlaps);
-      listWithQuietScore = updateQuietScore(listNoOverlaps).sort((a, b) => (a.quietScore < b.quietScore) ? 1 : -1);
+      listWithQuietScore = (updateQuietScore(listNoOverlaps).sort((a, b) => (a.quietScore < b.quietScore) ? 1 : -1)).slice(0, 25);
       response.render('pages/searchresults', {data: listWithQuietScore} );
     })
     // .then(result => console.log(cafes.filter(cafe => !result.includes(cafe.address))));
@@ -246,7 +246,6 @@ function updateQuietScore(arr){
 function detailCafe (request, response) {
   listWithQuietScore.forEach(cafe => {
     if(cafe.places_id === request.params.places_id) {
-      console.log('ME FIREEE');
       return response.render('pages/detail', {data:cafe})
     }
   })
