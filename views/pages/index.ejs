@@ -11,11 +11,12 @@
 
             <fieldset>
                 <legend>
-                    <input type="text" name="searchquery" class="location-search-box" placeholder="Search near ..." required>
+                    <input type="text" name="searchquery" class="location-search-box" value="" placeholder="Search near ..." required>
                 </legend>
             </fieldset>
 
             <fieldset>
+                <button class="button button-primary" onclick="getLocation()">Get My Current Location</button>
                 <button class="button button-primary" type="submit" id="location-search-button">Go</button>
             </fieldset>
 
