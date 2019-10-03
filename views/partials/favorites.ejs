@@ -9,5 +9,6 @@ data.forEach(favorite => { %>
         <i class="far fa-star"></i>
     </p>
     <p><%= favorite.address %></p>
+    <a class="delete button button-secondary" href="/favorites/delete/<%= favorite.places_id %>">Delete</a>
     </li>
 <% }) %>
