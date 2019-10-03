@@ -1,5 +1,6 @@
 /* ===== see nav.css for nav-specific stuff ======  */
 
+hr {border:1px dotted #ccc; margin:24px 16px;}
 
 /* ===== form elements ======  */
 
@@ -170,26 +171,31 @@ footer {
 /*  ------------ logo and search form  ------------ */
 
 #logo {
-    width: 35vw;
-    margin: -16px auto 0;
-    min-width: 300px;
+    width: 30vw;
+    margin: -24px auto 0;
+    min-width: 240px;
+}
+
+#logo-type {
+    display: block;
+    width: 50vw;
+    margin: 24px auto 0;
 }
 
 @media (min-width:1024px) {
-
+    
     #logo {
         width: 25vw;
         margin: -24px auto 0;
     }
-
+    
+    #logo-type {
+        display: block;
+        width: 300px;
+        margin: 24px auto 0;
+    }
 }
 
-
-#logo-type {
-    display: block;
-    width: 300px;
-    margin: 24px auto 0;
-}
 
 
 #hero {
@@ -198,9 +204,18 @@ footer {
 
 #search-form {
     background: #fefefe;
-    padding: 48px;
-    margin: 48px 0;
+    padding: 24px;
+    margin: 24px 0;
     text-align: center;
+}
+
+@media (min-width:1024px) {
+    
+    #search-form {
+        padding: 48px;
+        margin: 48px 0;
+    }
+    
 }
 
 #search-form .button {

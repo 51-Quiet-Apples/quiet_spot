@@ -100,6 +100,7 @@ function saveFavorite(request, response) {
       const values = [cafe.name, cafe.address, cafe.rating, cafe.photo, cafe.places_id];
 
       client.query(sql, values)
+        .then( response.redirect('/') )
     }
     else {console.log('🔥🔥🔥🔥🔥🔥 Save to DB Failed 🔥🔥🔥🔥🔥🔥')}
   })
