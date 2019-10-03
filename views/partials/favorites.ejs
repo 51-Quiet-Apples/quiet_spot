@@ -1,0 +1,8 @@
+<% 
+// console.log('trynta render favorites.ejs') 
+data.forEach(favorite => { %>
+<li class="card">
+    <h4><%= favorite.name %></h4>
+    <p><%= favorite.address %></p>    
+</li>
+<% }) %>

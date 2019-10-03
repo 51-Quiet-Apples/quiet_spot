@@ -11,21 +11,25 @@
 
             <fieldset>
                 <legend>
-                    <input type="text" name="location" class="location-search-box" placeholder="Search near ...">
+                    <input type="text" name="searchquery" class="location-search-box" placeholder="Search near ..." required>
                 </legend>
             </fieldset>
 
             <fieldset>
-                <button type="submit" id="location-search-button">Go</button>
+                <button class="button button-primary" type="submit" id="location-search-button">Go</button>
             </fieldset>
 
         </form>
 
+        <h3>Favorites</h3>
 
-        <h2>Favorites</h2>
+        <ul id="favorites" class="card-list vertical-cards">
+        </ul>
         
         <h2>Recent searches</h2>
-
+        
+        <ul id="recents" class="card-list">
+        </ul>
 
     </main>
 

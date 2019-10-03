@@ -1,0 +1,33 @@
+<%- include('../layout/head.ejs')  %>
+
+<body class="front-page">
+
+    <%- include('../layout/header.ejs') %>
+
+    <main>
+        <a class="backlink" href="/">
+            < back to search</a> <h2>Top <%- data.length %> recommended cafes</h2>
+                <ul id="search-results-list" class="card-list">
+
+                    <% 
+                // console.log(data); 
+                data.forEach(cafe => { %>
+                    <li class="cafe-result card">
+                        <form class="cafe-form" action="/favorites/<%= cafe.places_id %>" method="POST"> 
+                        <img class="cafe-image" src="" />
+                        <h4 class="name"><%= cafe.name %></h4>
+                        <p class="">Rating:
+                            <%= cafe.rating %>
+                            <i class="far fa-star"></i>
+                        </p>
+                        <p class="address"><%= cafe.address %></p>
+                        <button type="submit" class="favorite button button-secondary" href="/favorites/<%= cafe.places_id %>">+ Add to my favorites</button>
+                    </form>
+                    </li>  
+                    <% }) %>
+                </ul>
+
+
+    </main>
+
+    <%- include('../layout/footer.ejs') %>
