@@ -46,6 +46,8 @@ function errorHandler(error, request, response) {
 // ----- Routes -----
 app.get('/', (request, response) => response.render('pages/index'));
 
+app.get('/search/', getSearches );
+
 app.post('/search', getLatLong);
 
 app.post('/favorites/:places_id', saveFavorite );
@@ -117,7 +119,17 @@ function getFavorites(request, response){
     .then(result => {
       response.render('partials/favorites', {data:result.rows})
     })
+}
 
+
+function getSearches(request, response){
+  console.log('🔥🔥🔥🔥🔥🔥 trynta get searches 🔥🔥🔥🔥🔥🔥')
+  const sql = 'SELECT * FROM searches LIMIT 10;';
+  client.query(sql)
+
+    .then(result => {
+      response.render('partials/recent-searches', {data:result.rows})
+    })
 }
 
 
