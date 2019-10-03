@@ -1,4 +1,5 @@
 <%- include('../layout/head.ejs')  %>
+<%- include('../layout/header.ejs')  %>
 
 <body>
     <main>
@@ -11,8 +12,8 @@
         </div>
       </section>
 
-      <button type="submit" class="favorite button button-secondary" href="">+ Add to my favorites</button>
-      <button type="submit" class="favorite button button-secondary" href="">Delete</button>
+      <button type="submit" class="favorite button button-secondary" href="/favorites/<%= data.places_id %>">+ Add to my favorites</button>
+      <button type="submit" class="favorite button button-secondary" href="/favorites/delete/<%= data.places_id %>">Delete</button>
     </main>
   <footer>
     <%- include('../layout/footer.ejs') %>
