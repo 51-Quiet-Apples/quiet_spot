@@ -237,7 +237,7 @@ function updateCount(arr1, arr2){
 function updateQuietScore(arr){
   const max = arr.reduce((max, cur) => Math.max(max, cur.count), arr[0].count);
   return arr.map(cafe => {
-    cafe.quietScore = 5 - 5 * cafe.count / max;
+    cafe.quietScore = (5 - 5 * cafe.count / max).toFixed(2);
     return cafe;
   })
 }
