@@ -41,3 +41,17 @@ $(document).ready(function () {
   return false;
 
 })
+
+
+// source: https://www.codingame.com/playgrounds/3799/html-geolocation
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(getPosition);
+  }
+  else {
+    alert('Sorry! This browser does not support HTML Geolocation.');
+  }
+}
+function getPosition(position) {
+  document.getElementsByName('searchquery')[0].value = `${position.coords.latitude}, ${position.coords.longitude}`;
+}
