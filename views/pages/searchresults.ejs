@@ -13,17 +13,21 @@
                 // console.log(data); 
                 data.forEach(cafe => { %>
                     <li class="cafe-result card">
-                        <form class="cafe-form" action="/favorites/<%= cafe.places_id %>" method="POST"> 
-                        <img class="cafe-image" src="<%= cafe.photo %>" />
-                        <h4 class="name"><%= cafe.name %></h4>
-                        <p class="">Rating:
-                            <%= cafe.rating %>
-                            <i class="far fa-star"></i>
-                        </p>
-                        <p class="address"><%= cafe.address %></p>
-                        <button type="submit" class="favorite button button-secondary" href="/favorites/<%= cafe.places_id %>">+ Add to my favorites</button>
-                    </form>
-                    </li>  
+                        <form class="cafe-form" action="/favorites/<%= cafe.places_id %>" method="POST">
+                            <figure class="image-container">
+                                <img class="cafe-image" src="<%= cafe.photo %>" />
+                            </figure>
+                            <h4 class="name"><%= cafe.name %></h4>
+                            <p class="">Rating:
+                                <%= cafe.rating %>
+                                <i class="far fa-star"></i>
+                            </p>
+                            <p class="address"><%= cafe.address %></p>
+                            <p class="quiet-score">Quiet score: <%= cafe.quietScore %></p>
+                            <button type="submit" class="favorite button button-secondary"
+                                href="/favorites/<%= cafe.places_id %>">+ Add to my favorites</button>
+                        </form>
+                    </li>
                     <% }) %>
                 </ul>
 

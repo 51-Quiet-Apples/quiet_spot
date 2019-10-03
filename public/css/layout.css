@@ -8,33 +8,7 @@ main {
     background: #98B3B1;
 }
 
-#logo {
-    width: 35vw;
-    margin: -16px auto 0;
-}
 
-#logo-type {
-    display: block;
-    width: 300px;
-    margin: 24px auto 0;
-}
-
-
-#hero {
-    text-align: center;
-}
-
-#search-form {
-    background: #fefefe;
-    padding: 48px;
-    margin: 48px 0;
-    text-align: center;
-}
-
-#search-form .button {
-    margin: 16px auto 0;
-    width: 100%;
-}
 
 @media(min-width:640px) {}
 
