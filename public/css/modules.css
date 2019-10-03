@@ -1,16 +1,5 @@
 /* ===== see nav.css for nav-specific stuff ======  */
 
-.page-header {
-    background: #333;
-    height: 80px;
-}
-
-.page-header h2 {
-    margin: 0 0 0 120px;
-    line-height: 80px;
-    color: #dedede;
-}
-
 
 /* ===== form elements ======  */
 
@@ -24,12 +13,15 @@ legend {
 
 
 input[type=text] {
-    line-height: 24px;
-    border: 2px solid #666;
-    padding: 16px;
+    border:3px solid #D3D9CB;
+    padding: 24px 16px;
     display: block;
     margin-top: 8px;
     width: 100%;
+    border-radius:1px;
+    line-height: 1.2rem;
+    font-size:1.4rem;
+
 }
 
 label {
@@ -37,6 +29,7 @@ label {
     margin-top: 16px;
     display: inline-block;
 }
+
 
 /* ===== footer ======  */
 
@@ -66,33 +59,82 @@ footer {
 /*  ------------ Buttons  ------------ */
 
 .button {
-    line-height: 44px;
+    line-height: 52px;
     padding: 0 16px;
     display: block;
     font-weight: 500;
-    text-transform: capitalize;
-    min-width:120px;
-    text-align:center;
+    text-transform: uppercase;
+    letter-spacing:1px;;
+    min-width: 120px;
+    text-align: center;
     margin: 16px 0 0;
+    border-radius:1px;
+    box-shadow:none;
 }
 
 .button-primary {
-    background: #666;
-    color: #dedede;
+    background: #D3D9CB;
+    color: #555;
 }
 
 .button-primary:hover {
-    background: #555;
-    color: #dedede;
+    background: #D3D9CB;
+    color: #555;
 }
 
 .button-secondary {
-    border: 2px solid #666;
+    border: 2px solid #D3D9CB;
     color: #666;
 }
 
 .button-secondary:hover {
     color: #555;
-    border: 2px solid #555;
+    border: 2px solid #D3D9CB;
 
+}
+
+
+/* ===== page header ======  */
+
+.page-header {
+    background: #333;
+    height: 80px;
+}
+
+.page-header #header-logo {
+    height: 40px;
+    margin: 20px 0 0 120px;
+    position: absolute;
+    right: 40px
+}
+
+
+/*  ------------ logo and search form  ------------ */
+
+#logo {
+    width: 35vw;
+    margin: -16px auto 0;
+}
+
+#logo-type {
+    display: block;
+    width: 300px;
+    margin: 24px auto 0;
+}
+
+
+#hero {
+    text-align: center;
+}
+
+#search-form {
+    background: #fefefe;
+    padding: 48px;
+    margin: 48px 0;
+    text-align: center;
+}
+
+#search-form .button {
+    margin: 16px auto 0;
+    width: 100%;
 }

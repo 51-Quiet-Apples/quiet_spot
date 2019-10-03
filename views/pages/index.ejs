@@ -5,29 +5,44 @@
     <%- include('../layout/header.ejs') %>
 
     <main>
-        <h1>Find a Quiet Spot</h1>
 
-        <form id="location-search" action="/search" method="post">
+        <section id="hero">
+            <img alt="Quiet Spot" id="logo" src="/images/quiet_spot_logo_black.png" />
+            <img alt="Quiet Spot" id="logo-type" src="/images/quiet_spot_type_black.png" />
+        </section>
+        
+        <section id="search-form">
+                <h4>Find a Quiet Spot</h4>
+            <form id="location-search" action="/search" method="post">
+
+                <fieldset>
+                    <legend>
+                        <input type="text" name="searchquery" class="location-search-box" placeholder="Search near ..." required>
+                    </legend>
+                </fieldset>
 
             <fieldset>
                 <legend>
-                    <input type="text" name="searchquery" class="location-search-box" placeholder="Search near ..." required>
+                    <input type="text" name="searchquery" class="location-search-box" value="" placeholder="Search near ..." required>
                 </legend>
             </fieldset>
 
             <fieldset>
+                <button class="button button-primary" onclick="getLocation()">Get My Current Location</button>
+                <hr />
                 <button class="button button-primary" type="submit" id="location-search-button">Go</button>
             </fieldset>
 
-        </form>
+            </form>
+        </section>
 
         <h3>Favorites</h3>
 
         <ul id="favorites" class="card-list vertical-cards">
         </ul>
-        
+
         <h2>Recent searches</h2>
-        
+
         <ul id="recents" class="card-list">
         </ul>
 
